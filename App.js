@@ -30,7 +30,6 @@ export default function App() {
   const answerCall = ({ callUUID }) => {
     const number = calls[callUUID];
     console.log(`[answerCall] ${format(callUUID)}, number: ${number}`);
-    RNCallKeep.startCall(callUUID, number, number);
   };
 
   const didPerformDTMFAction = ({ callUUID, digits }) => {
@@ -43,28 +42,22 @@ export default function App() {
       return;
     }
     const callUUID = getNewUuid();
-    addCall(callUUID, handle);
-
     console.log(`[didReceiveStartCallAction] ${callUUID}, number: ${handle}`);
-    RNCallKeep.startCall(callUUID, handle, handle);
   };
 
   const didPerformSetMutedCallAction = ({ muted, callUUID }) => {
     const number = calls[callUUID];
     console.log(`[didPerformSetMutedCallAction] ${format(callUUID)}, number: ${number} (${muted})`);
-    setCallMuted(callUUID, muted);
   };
 
   const didToggleHoldCallAction = ({ hold, callUUID }) => {
     const number = calls[callUUID];
     console.log(`[didToggleHoldCallAction] ${format(callUUID)}, number: ${number} (${hold})`);
-    setCallHeld(callUUID, hold);
   };
 
   const endCall = ({ callUUID }) => {
     const handle = calls[callUUID];
     console.log(`[endCall] ${format(callUUID)}, number: ${handle}`);
-    removeCall(callUUID);
   };
 
   //Hooks Eventos
