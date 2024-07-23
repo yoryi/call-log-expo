@@ -42,8 +42,16 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>We need access to Bluetooth to improve call quality.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>We need access to your contacts to make calls.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone to make calls.</string>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>audio</string>
+		<string>external-accessory</string>
 		<string>fetch</string>
 		<string>processing</string>
 		<string>remote-notification</string>
@@ -75,5 +83,7 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>com.apple.developer.networking.voip</key>
+	<true/>
 </dict>
 </plist>
