@@ -60,6 +60,16 @@ export default function App() {
     console.log(`[endCall] ${format(callUUID)}, number: ${handle}`);
   };
 
+  const handleGetList = async () => {
+   RNCallKeep.startCall(getNewUuid, '+573008443534', "contactIdentifier", "number", false);
+   console.log('res: ', e)
+  }
+
+  const handleCall = async () => {
+     RNCallKeep.startCall(getNewUuid, '3008443534', "appcall", "number", false);
+     console.log('res: ', e)
+    }
+
   //Hooks Eventos
   useEffect(() => {
     RNCallKeep.addEventListener('answerCall', answerCall);
@@ -81,7 +91,7 @@ export default function App() {
 
   //Make Call
   const handleMakeCall = async () => {
-    const res = moduleNative.makeCall('+573008443534')
+    const res = moduleNative.makeCall('+573017771564')
     console.log('res', res)
   }
 
@@ -101,7 +111,7 @@ export default function App() {
           App Prueba para llamadas!
         </Text>
         <TouchableOpacity
-          onPress={handleMakeCall}
+          onPress={handleCall}
           style={{
             backgroundColor: "black",
             padding: 20,

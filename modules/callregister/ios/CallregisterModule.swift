@@ -7,20 +7,20 @@ public class CallregisterModule: Module {
     private var callStartTime: Date?
     private var callEndTime: Date?
 
-    // Definition for the module
     public func definition() -> ModuleDefinition {
         Name("Callregister")
 
         OnStartObserving {
-            // Initialize and set up the call observer
-            print("Iniciamos")
-//            self.callObserver = CXCallObserver()
+            //print("Iniciamos")
+            self.callObserver = CXCallObserver();
+//            self.callObserver?.setDelegate(self, queue: DispatchQueue.main);
         }
 
         Function("makeCall") { (phoneNumber: String) in
-            // Make a phone call
             if let phoneUrl = URL(string: "tel://\(phoneNumber)") {
-                UIApplication.shared.open(phoneUrl)
+                DispatchQueue.main.async {
+                    UIApplication.shared.open(phoneUrl, options: [:], completionHandler: nil)
+                }
             }
         }
 
@@ -41,21 +41,18 @@ public class CallregisterModule: Module {
             self.callObserver = nil
         }
     }
-    
 
-    // CXCallObserverDelegate method
-    @objc public func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+    public func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        print("Resultados", call);
         if call.hasConnected {
-            print("hasConnected")
-            // Set call start time when the call connects
+            print("Call has connected")
             if callStartTime == nil {
                 callStartTime = Date()
             }
         }
 
         if call.hasEnded {
-            print("hasEnded")
-            // Set call end time when the call ends
+            print("Call has ended")
             if callEndTime == nil {
                 callEndTime = Date()
             }
