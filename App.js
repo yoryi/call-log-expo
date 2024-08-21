@@ -6,7 +6,7 @@ import * as moduleNative from "./modules/callregister";
 export default function App() {
   //Make Call
   const handleMakeCall = async () => {
-    const res = moduleNative.makeCall("+573017771564");
+    const res = moduleNative.makeCall("+573005554313");
     console.log("res", res);
   };
 
