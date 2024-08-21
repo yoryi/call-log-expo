@@ -1,4 +1,3 @@
-import uuid from 'uuid';
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -15,11 +14,7 @@ export default function App() {
   }
 
   const getCallTimes = async () => {
-    const start = await moduleNative.getCallStartTime();
-    const end = await moduleNative.getCallEndTime();
     console.log('res: ', start);
-    setStartTime(start);
-    setEndTime(end);
   };
 
   const renderUI = () => {
