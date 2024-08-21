@@ -1,93 +1,12 @@
 import uuid from 'uuid';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as moduleNative from './modules/callregister';
-import RNCallKeep from 'react-native-callkeep';
-
-//Variables
-const getNewUuid = () => uuid.v4().toLowerCase();
-
-//Implemantacion
-RNCallKeep.setup({
-  ios: {
-    appName: 'appcall',
-  },
-  android: {
-     alertTitle: 'Permissions required',
-    alertDescription: 'This application needs to access your phone accounts',
-    cancelButton: 'Cancel',
-    okButton: 'ok',
-  },
-});
-
 
 export default function App() {
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
-
-  //All Funtions 
-  const answerCall = ({ callUUID }) => {
-    const number = calls[callUUID];
-    console.log(`[answerCall] ${format(callUUID)}, number: ${number}`);
-  };
-
-  const didPerformDTMFAction = ({ callUUID, digits }) => {
-    const number = calls[callUUID];
-    console.log(`[didPerformDTMFAction] ${format(callUUID)}, number: ${number} (${digits})`);
-  };
-
-  const didReceiveStartCallAction = ({ handle }) => {
-    if (!handle) {
-      return;
-    }
-    const callUUID = getNewUuid();
-    console.log(`[didReceiveStartCallAction] ${callUUID}, number: ${handle}`);
-  };
-
-  const didPerformSetMutedCallAction = ({ muted, callUUID }) => {
-    const number = calls[callUUID];
-    console.log(`[didPerformSetMutedCallAction] ${format(callUUID)}, number: ${number} (${muted})`);
-  };
-
-  const didToggleHoldCallAction = ({ hold, callUUID }) => {
-    const number = calls[callUUID];
-    console.log(`[didToggleHoldCallAction] ${format(callUUID)}, number: ${number} (${hold})`);
-  };
-
-  const endCall = ({ callUUID }) => {
-    const handle = calls[callUUID];
-    console.log(`[endCall] ${format(callUUID)}, number: ${handle}`);
-  };
-
-  const handleGetList = async () => {
-   RNCallKeep.startCall(getNewUuid, '+573008443534', "contactIdentifier", "number", false);
-   console.log('res: ', e)
-  }
-
-  const handleCall = async () => {
-     RNCallKeep.startCall(getNewUuid, '3008443534', "appcall", "number", false);
-     console.log('res: ', e)
-    }
-
-  //Hooks Eventos
-  useEffect(() => {
-    RNCallKeep.addEventListener('answerCall', answerCall);
-    RNCallKeep.addEventListener('didPerformDTMFAction', didPerformDTMFAction);
-    RNCallKeep.addEventListener('didReceiveStartCallAction', didReceiveStartCallAction);
-    RNCallKeep.addEventListener('didPerformSetMutedCallAction', didPerformSetMutedCallAction);
-    RNCallKeep.addEventListener('didToggleHoldCallAction', didToggleHoldCallAction);
-    RNCallKeep.addEventListener('endCall', endCall);
-
-    return () => {
-      RNCallKeep.removeEventListener('answerCall', answerCall);
-      RNCallKeep.removeEventListener('didPerformDTMFAction', didPerformDTMFAction);
-      RNCallKeep.removeEventListener('didReceiveStartCallAction', didReceiveStartCallAction);
-      RNCallKeep.removeEventListener('didPerformSetMutedCallAction', didPerformSetMutedCallAction);
-      RNCallKeep.removeEventListener('didToggleHoldCallAction', didToggleHoldCallAction);
-      RNCallKeep.removeEventListener('endCall', endCall);
-    }
-  }, []);
 
   //Make Call
   const handleMakeCall = async () => {
@@ -111,7 +30,7 @@ export default function App() {
           App Prueba para llamadas!
         </Text>
         <TouchableOpacity
-          onPress={handleCall}
+          onPress={handleMakeCall}
           style={{
             backgroundColor: "black",
             padding: 20,

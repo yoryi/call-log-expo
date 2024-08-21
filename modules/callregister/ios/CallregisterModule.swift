@@ -9,12 +9,29 @@ public class CallregisterModule: Module {
 
     public func definition() -> ModuleDefinition {
         Name("Callregister")
-
-        OnStartObserving {
-            //print("Iniciamos")
-            self.callObserver = CXCallObserver();
-//            self.callObserver?.setDelegate(self, queue: DispatchQueue.main);
+        
+        OnCreate {
+             let callUIController = CXProviderConfiguration()
+             let callProvider = CXProvider(configuration: callUIController)
+            
+             callProvider.self.setDelegate(<#T##delegate: (any CXProviderDelegate)?##(any CXProviderDelegate)?#>, queue: <#T##dispatch_queue_t?#>)
+             let callWatchman = CXCallUpdate()
+             callWatchman.remoteHandle = CXHandle(type: .phoneNumber, value: "+3008443534")
+             callWatchman.hasVideo = false
+             callWatchman.localizedCallerName = "appcall"
+             callWatchman.supportsGrouping = true
+             
+             callProvider.reportNewIncomingCall(with: UUID(), update: callWatchman, completion: { error in
+                 if let error = error {
+                     print("Failed to report incoming call: \(error)")
+                 } else {
+                     print("Incoming call reported successfully")
+                 }
+             })
+            
         }
+        
+        
 
         Function("makeCall") { (phoneNumber: String) in
             if let phoneUrl = URL(string: "tel://\(phoneNumber)") {
@@ -23,39 +40,8 @@ public class CallregisterModule: Module {
                 }
             }
         }
-
-        Function("getCallStartTime") {
-            // Return the start time of the call
-            return self.callStartTime?.timeIntervalSince1970
-        }
-
-        Function("getCallEndTime") {
-            // Return the end time of the call
-            return self.callEndTime?.timeIntervalSince1970
-        }
-
-        OnStopObserving {
-            // Clean up the call observer
-            print("Terminamos")
-            self.callObserver?.setDelegate(nil, queue: nil)
-            self.callObserver = nil
-        }
     }
 
-    public func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
-        print("Resultados", call);
-        if call.hasConnected {
-            print("Call has connected")
-            if callStartTime == nil {
-                callStartTime = Date()
-            }
-        }
 
-        if call.hasEnded {
-            print("Call has ended")
-            if callEndTime == nil {
-                callEndTime = Date()
-            }
-        }
-    }
+    
 }
